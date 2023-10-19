@@ -1,0 +1,314 @@
+@font-face {
+  font-family: sahel;
+  src: url("./asset/fonts/Sahel-Black.eot");
+  src: url("./asset/fonts/Sahel-Black.ttf") format("ttf"),
+    url("./asset/fonts/Sahel-Black.woff") format("woff"),
+    url("./asset/fonts/Sahel-Black.woff2") format("woff2");
+}
+@font-face {
+  font-family: shabnam;
+  src: url("./asset/fonts/Shabnam-Medium.eot");
+  src: url("./asset/fonts/Shabnam-Medium.ttf") format("ttf"),
+    url("./asset/fonts/Shabnam-Medium.woff") format("woff"),
+    url("./asset/fonts/Shabnam-Medium.woff2") format("woff2");
+}
+
+.form-container {
+  padding: 10px;
+  margin: 20px;
+  margin-top: 30px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 20px;
+  font-family: shabnam;
+  animation: moveInLeft;
+  animation-duration: 2s;
+}
+
+.form-title {
+  font-size: 28px;
+  font-family: sahel;
+  margin-top: 40px;
+  color: rgba(15, 15, 228, 0.759);
+  animation: moveInRight;
+  animation-duration: 4s;
+}
+
+.logo {
+  max-width: 140px;
+}
+.faregh-logo {
+  max-width: 120px;
+  padding-top: 8px;
+}
+.btn-submit {
+  width: 30%;
+  animation: MoveToTop;
+  animation-duration: 1.5s;
+}
+@media only screen and (max-width: 992px) {
+  .form-title {
+    font-size: 20px;
+    width: 450px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 40px;
+  }
+
+  .faregh-logo {
+    width: 60px;
+  }
+
+  .logo {
+    max-width: 80px;
+  }
+  .btn-submit {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .form-title {
+    font-size: 14px;
+    width: 300px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .faregh-logo {
+    width: 60px;
+    margin-right: 50px;
+  }
+
+  .logo {
+    max-width: 80px;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .rox {
+    width: 100px;
+  }
+  .form-container {
+    width: 100px;
+  }
+  .form-title {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-top: 30px;
+    margin-right: 30px;
+    font-size: 15px;
+    width: 200px;
+  }
+  .form-title-table {
+    font-size: 22px;
+  }
+  .faregh-logo {
+    width: 60px;
+    margin-left: 50px;
+  }
+
+  .logo {
+    margin-top: 10px;
+    max-width: 70px;
+  }
+  .btn-submit {
+    width: 100%;
+  }
+  .table-header {
+    font-size: 25px;
+  }
+}
+@media only screen and (max-width: 380px) {
+  .form-container {
+    margin-top: 0px;
+    padding: 20px;
+  }
+  .faregh-logo {
+    display: none;
+  }
+  .table-header {
+    font-size: 17px;
+  }
+  .table-logo {
+    width: 80px;
+  }
+  .btn-submit {
+    width: 100%;
+  }
+}
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes MoveToTop {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+.login-container {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 20px;
+  max-width: 500px;
+  padding: 25px;
+  margin-top: 180px;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(255, 253, 253, 0.857),
+      rgba(182, 199, 235, 0.736)
+    ),
+    url("./asset//images/UniversityPicture.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin-right: auto;
+  margin-left: auto;
+  animation: moveInRight;
+  animation-duration: 1.5s;
+  font-family: shabnam;
+}
+.login-container h4 {
+  color: rgba(15, 15, 228, 0.759);
+  font-family: sahel;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.login-btn {
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: rgba(15, 15, 228, 0.759);
+  transition: all 0.5s;
+}
+.login-btn:hover {
+  border-radius: 15px;
+  background-color: rgba(15, 15, 228, 0.914);
+}
+.info-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.info-btn button {
+  color: white;
+  border-radius: 20px;
+  padding: 15px 25px;
+  background-color: rgba(15, 15, 228, 0.759);
+  border: none;
+  box-shadow: rgba(100, 100, 111, 0.512) 0px 7px 29px 0px;
+  transition: all 0.5s;
+  font-family: shabnam;
+}
+.info-btn button:hover {
+  border-radius: 25px;
+  background-color: rgba(15, 15, 228, 0.897);
+}
+.table-container {
+  font-family: shabnam;
+  border-radius: 20px;
+  margin: 0px 20px 0px 20px;
+  box-shadow: rgba(100, 100, 111, 0.044) 0px 7px 29px 0px;
+}
+.table-header {
+  font-family: sahel;
+  color: rgba(15, 15, 228, 0.759);
+}
+.table-logo {
+  max-width: 100px;
+}
+
+.table-loading {
+  font-family: sahel;
+  margin-top: 200px;
+  font-size: 20px;
+}
+.custom-sweetalert-font {
+  font-family: shabnam;
+}
+.custom-primary-button {
+  color: white;
+  background-color: rgba(11, 11, 247, 0.752);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 25px;
+  margin-left: 10px;
+}
+.custom-secondary-button {
+  border: none;
+  color: rgb(0, 0, 0);
+  background-color: white;
+  border: 0.1px solid red;
+  padding: 5px;
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+.custom-secondary-button:hover {
+  border: none;
+  background-color: red;
+  color: white;
+  transition: all 0.5s;
+}
+
+.bold-header {
+  border: 2px solid rgb(3, 3, 251) !important;
+  background-color: rgba(59, 72, 250, 0.598) !important;
+  text-align: center;
+}
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table td {
+  border: 1px solid #000000;
+  padding: 8px;
+  text-align: center;
+}
+
+.td {
+  border: 1px solid rgb(7, 7, 217) !important;
+  background-color: rgba(2, 72, 169, 0.088) !important;
+}
+.odd-row {
+  background-color: #7ac2e81f !important;
+}
+.even-row:hover,
+.odd-row:hover {
+  background-color: rgb(196, 206, 229) !important;
+}
+.table-sort {
+  margin: 5px 20px 10px 0px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  animation: moveInRight;
+  animation-duration: 2.5s;
+  font-family: sahel;
+  box-shadow: rgba(23, 4, 239, 0.119) 0px 7px 29px 0px;
+}
