@@ -9,7 +9,7 @@ import logo from "../../asset/images/UniversityPicture.png";
 const DataTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [sortKey, setSortKey] = useState(""); // State to store the sorting key
+  const [sortKey, setSortKey] = useState(""); 
   const tableRef = useRef(null);
 
   useEffect(() => {
