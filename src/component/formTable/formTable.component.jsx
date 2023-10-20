@@ -1,72 +1,141 @@
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import Spinner from "react-bootstrap/Spinner";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import React, { useEffect, useState } from "react";
+import qs from "qs";
+import { Table, Button } from "antd";
+import { saveAs } from "file-saver";
+import { useReactToPrint } from "react-to-print";
 import * as XLSX from "xlsx";
 import logo from "../../asset/images/UniversityPicture.png";
 
-const DataTable = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [sortKey, setSortKey] = useState(""); 
-  const tableRef = useRef(null);
+const columns = [
+  {
+    title: " کد ملی",
+    dataIndex: "name",
+    sorter: true,
+    render: (name) => `${name.first} ${name.last}`,
+  },
+  {
+    title: "نام",
+    dataIndex: "name",
+    sorter: true,
+    render: (name) => `${name.first} `,
+  },
+  {
+    title: "نام خانوادگی",
+    dataIndex: "name",
+    sorter: true,
+    render: (name) => ` ${name.last}`,
+  },
+  {
+    title: "شماره تماس",
+    dataIndex: "name",
+    sorter: true,
+    render: (name) => ` ${name.last}`,
+  },
+  {
+    title: "ایمیل",
+    dataIndex: "email",
+  },
+  {
+    title: "رشته و مقطع ",
+    dataIndex: "name",
+    sorter: true,
+    render: (name) => ` ${name.last}`,
+  },
+  {
+    title: "اخرین مدرک تحصیلی ",
+    dataIndex: "name",
+    sorter: true,
+    render: (name) => ` ${name.last}`,
+  },
+  {
+    title: "شغل ",
+    dataIndex: "name",
+    sorter: true,
+    render: (name) => ` ${name.last}`,
+  },
+  {
+    title: "محل کار",
+    dataIndex: "name",
+    sorter: true,
+    render: (name) => ` ${name.last}`,
+  },
+];
+
+const getRandomuserParams = (params) => ({
+  results: params.pagination?.pageSize,
+  page: params.pagination?.current,
+  ...params,
+});
+
+const App = () => {
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  });
+
+  const tableRef = React.createRef();
+
+  const fetchData = () => {
+    setLoading(true);
+    fetch(
+      `https://randomuser.me/api?${qs.stringify(
+        getRandomuserParams(tableParams)
+      )}`
+    )
+      .then((res) => res.json())
+      .then(({ results }) => {
+        setData(results);
+        setLoading(false);
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: 200,
+          },
+        });
+      });
+  };
 
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      });
-  }, []);
+    fetchData();
+  }, [JSON.stringify(tableParams)]);
 
-  const handleSortChange = (e) => {
-    setSortKey(e.target.value);
-  };
-
-  const handleDownloadPDF = () => {
-    if (tableRef.current) {
-      html2canvas(tableRef.current).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a3");
-        pdf.addImage(imgData, "PNG", 2, 0, 290, 150);
-        pdf.save("اطلاعات دانشجویان فارغ التحصیل.pdf");
-      });
-    }
-  };
-
-  const handleDownloadExcel = () => {
-    if (data.length > 0) {
-      const ws = XLSX.utils.json_to_sheet(data);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Data");
-      XLSX.writeFile(wb, "اطلاعات دانشجویان فارغ التحصیل.xlsx");
-    }
-  };
-
-  const sortData = (dataToSort, key) => {
-    return [...dataToSort].sort((a, b) => {
-      if (a[key] < b[key]) return -1;
-      if (a[key] > b[key]) return 1;
-      return 0;
+  const handleTableChange = (pagination, filters, sorter) => {
+    setTableParams({
+      pagination,
+      filters,
+      ...sorter,
     });
   };
 
-  const sortedData = sortKey ? sortData(data, sortKey) : data;
+  const handlePDFDownload = () => {
+    printTable(data);
+  };
 
-  if (loading) {
-    return (
-      <div className="table-loading text-center ">
-        در حال بارگزاری اطلاعات ...
-        <Spinner className="mx-3" animation="grow" variant="primary" />
-      </div>
-    );
-  }
+  const handleExcelDownload = () => {
+    exportToExcel(data);
+  };
+
+  const printTable = useReactToPrint({
+    content: () => tableRef.current,
+  });
+
+  const exportToExcel = (exportData) => {
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    saveExcelFile(excelBuffer, "table_data.xlsx");
+  };
+
+  const saveExcelFile = (buffer, fileName) => {
+    const blob = new Blob([buffer], { type: "application/octet-stream" });
+    saveAs(blob, fileName);
+  };
 
   return (
     <div>
@@ -75,63 +144,26 @@ const DataTable = () => {
           <img src={logo} className="table-logo" alt="University Logo" />
           اطلاعات دانشجویان فارغ التحصیل
         </h1>
-        <div className="table-responsive table-container">
-          <select onChange={handleSortChange} className=" table-sort">
-            <option value="">مرتب سازی بر اساس</option>
-            <option value="id">ID</option>
-            <option value="name">Name</option>
-            <option value="username">نام</option>
-            <option value="email">ایمیل</option>
-            <option value="phone">شماره تماس</option>
-            <option value="address.city">محل کار</option>
-          </select>
-          <table className="table">
-            <thead>
-              <tr>
-                <th className="bold-header"> # </th>
-                <th className="bold-header"> کد ملی </th>
-                <th className="bold-header"> نام </th>
-                <th className="bold-header"> نام خانوادگی </th>
-                <th className="bold-header"> شماره تماس </th>
-                <th className="bold-header"> ایمیل </th>
-                <th className="bold-header"> رشته و مقطع </th>
-                <th className="bold-header"> آخرین مدرک تحصیلی </th>
-                <th className="bold-header"> شغل </th>
-                <th className="bold-header"> محل کار </th>
-              </tr>
-            </thead>
-            <tbody className="table-body">
-              {sortedData.map((item, index) => (
-                <tr
-                  key={item.id}
-                  className={index % 2 === 0 ? "even-row" : "odd-row"}
-                >
-                  <td className="td">{item.id}</td>
-                  <td className="td">{item.name}</td>
-                  <td className="td">{item.username}</td>
-                  <td className="td">{item.email}</td>
-                  <td className="td">{item.phone}</td>
-                  <td className="td">{item.phone}</td>
-                  <td className="td">{item.phone}</td>
-                  <td className="td">{item.phone}</td>
-                  <td className="td">{item.phone}</td>
-                  <td className="td">{item.address.city}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table
+          className="data-table "
+          columns={columns}
+          rowKey={(record) => record.login.uuid}
+          dataSource={data}
+          pagination={tableParams.pagination}
+          loading={loading}
+          onChange={handleTableChange}
+        />
       </div>
-      <div className="info-btn mb-5">
-        <button className="mx-3" onClick={handleDownloadPDF}>
-          دانلود Pdf
-        </button>
-        <button className="mx-3" onClick={handleDownloadExcel}>
+      <div className="table-buttons">
+        <Button className="download-button px-4 " onClick={handlePDFDownload}>
+          دانلود PDF
+        </Button>
+        <Button className="download-button px-4" onClick={handleExcelDownload}>
           دانلود Excel
-        </button>
+        </Button>
       </div>
     </div>
   );
 };
 
-export default DataTable;
+export default App;
