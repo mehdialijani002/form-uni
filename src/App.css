@@ -303,6 +303,9 @@
 .odd-row:hover {
   background-color: rgb(196, 206, 229) !important;
 }
+.data-table {
+  background-color: rgba(128, 128, 128, 0.099);
+}
 .table-sort {
   margin: 5px 20px 10px 0px;
   padding: 10px 15px;
@@ -311,4 +314,22 @@
   animation-duration: 2.5s;
   font-family: sahel;
   box-shadow: rgba(23, 4, 239, 0.119) 0px 7px 29px 0px;
+}
+.table-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.download-button {
+  margin: 10px 0px 20px 20px;
+  background-color: rgba(21, 31, 184, 0.975);
+  color: white;
+  box-shadow: rgba(8, 8, 8, 0.24) 0px 7px 29px 0px;
+  font-family: sahel;
+}
+.download-button:hover {
+  background-color: rgba(9, 16, 212, 0.161);
+  color: black !important;
+  transition: all 0.5s;
+  box-shadow: rgba(32, 32, 176, 0.848) 0px 7px 29px 0px;
 }
